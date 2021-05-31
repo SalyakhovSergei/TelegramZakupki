@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
-using telegramnew;
+using TelegramTestBot.Data;
 
 namespace TelegramTestBot
 {
     public class KeyboardButtonLeft
     {
-        ListsOfItems listsOf = new ListsOfItems();
+        Products listsOf = new Products();
 
         public IReplyMarkup GetButtons2()
         {
@@ -32,14 +32,6 @@ namespace TelegramTestBot
                 ResizeKeyboard = true,
                 OneTimeKeyboard = true
             };
-
-            List <InlineKeyboardButton> list = new List<InlineKeyboardButton>();
-            foreach (string s in listsOf.igla)
-            {
-                list.Add(InlineKeyboardButton.WithCallbackData(s));
-            }
-            return new InlineKeyboardMarkup(list);
-
         }
 
         public IReplyMarkup GetButtons()
@@ -57,14 +49,6 @@ namespace TelegramTestBot
                 },
                 ResizeKeyboard = true
             };
-
-
         }
-
-
-
-
     }
-
-   
 }

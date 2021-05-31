@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace telegramnew
+namespace TelegramTestBot.Models
 {
-    public class Order
+    public class Product
     {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
         public string Category { get; set; }
-        public string Item { get; set; }
-        public int Qty { get; set; }
     }
 }

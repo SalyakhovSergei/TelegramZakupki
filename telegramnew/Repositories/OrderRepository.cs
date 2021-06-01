@@ -14,31 +14,40 @@ namespace TelegramTestBot.Repositories
 {
     public class OrderRepository
     {
-        private readonly SqlConnection sql;
- 
+        private readonly SqlConnection _sql;
+        private TelegramContext _telegramContext = new TelegramContext();
+
         public OrderRepository ()
         {
-            sql = new SqlConnection (BotCredentials.connectionstring);
+            _sql = new SqlConnection (BotCredentials.connectionstring);
         }
 
         public async void CreateOrder(Order order)
         {
-            if (sql.State == ConnectionState.Closed)
+            //applicationContext.OrdersDataBase.Add(order);
+
+
+            if (_sql.State == ConnectionState.Closed)
             {
-                sql.Open();
-                SqlCommand command = new SqlCommand($"INSERT INTO Orders (Id, UserId, Products) values ('{order.Id}', '{order.UserId}', '{JsonConvert.SerializeObject(order.Items)}')", sql);
+                _sql.Open();
+                SqlCommand command = new SqlCommand($"INSERT INTO Orders (Id, UserId, Products) values ('{order.Id}', '{order.UserId}', '{JsonConvert.SerializeObject(order.Items)}')", _sql);
                 await command.ExecuteNonQueryAsync();
-                sql.Close();
+                _sql.Close();
             }
+
         }
 
         public async Order [] GetOrdersByUserIdAsync (string userId)
         {
-            sql.Open();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter("", sql);
+            //var ordersByUserId = from order in applicationContext.OrdersDataBase
+            //                     where order.UserId == userId
+            //                     select order;
+
+            _sql.Open();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter($"SELECT * FROM Orders WHERE UserID = {userId}", _sql);
             DataTable dt = new DataTable();
             dataAdapter.Fill(dt);
-            sql.Close();
+            _sql.Close();
 
             List<Order> ordersByUserId = new List<Order>();
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -50,6 +59,11 @@ namespace TelegramTestBot.Repositories
             }
 
             return ordersByUserId.ToArray();
+        }
+
+        public async Task<Order> OrderTask(string UserId)
+        {
+
         }
 
 

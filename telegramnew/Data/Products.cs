@@ -24,7 +24,7 @@ namespace TelegramTestBot.Data
             UserId = telegramChat.Id,
             Items = new Dictionary<Guid, int>()
         };
-        public void t(Guid productId)
+        public void IncreaseQuantityOFItems(Guid productId)
         {
             if (order.Items.ContainsKey(productId))
             {

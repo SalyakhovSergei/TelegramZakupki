@@ -14,51 +14,32 @@ namespace TelegramTestBot
 {
     public class BotLogic
     {
-        private ITelegramBotClient botClient;
+        private ITelegramBotClient _botClient;
         
       
         public void Initialize()
         {
-            botClient = new TelegramBotClient(BotCredentials.token);
+            _botClient = new TelegramBotClient(BotCredentials.token);
         }
 
         public void Start()
         {
-            botClient.OnMessage += BotOnMessage;
-            botClient.StartReceiving();
+            _botClient.OnMessage += BotOnMessage;
+            _botClient.StartReceiving();
         }
 
         public void Stop()
         {
-            botClient.StopReceiving();
+            _botClient.StopReceiving();
         }
 
         private async void BotOnMessage(object sender, MessageEventArgs e)
         {
             KeyboardButtonLeft buttonLeft = new KeyboardButtonLeft();
-            Products listsOfItems = new Products();
             var msg = e.Message;
-
-            if (listsOfItems.category.Contains(msg.Text))
-            {
-                if (sql.State == ConnectionState.Closed)
-                {
-                    
-                }
-
-                await botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите товар: ", replyMarkup: buttonLeft.GetButtons2());
-            }
-
-            else if (listsOfItems.tampons.Contains(msg.Text))
-            {
-                
-
-                await botClient.SendTextMessageAsync(msg.Chat.Id, "Введите количество: ");
-            }
-            else
-            {
-                await botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ", replyMarkup: buttonLeft.GetButtons());
-            }
+            
+            await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите товар: ", replyMarkup: buttonLeft.GetButtons2());
+            
         }
     }
 }

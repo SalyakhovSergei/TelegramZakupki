@@ -11,8 +11,9 @@ namespace TelegramTestBot.Data
     public class Products
     {
         private static Chat telegramChat;
+        
 
-        public string[] category = new string[] {   "/закупка основных средств",
+        public string[] Category = new string[] {   "/закупка основных средств",
                                                      "/закупка расходных материалов",
                                                      "/закупка тары",
                                                      "/закупка ИТ девайсов",
@@ -23,7 +24,9 @@ namespace TelegramTestBot.Data
             Id = Guid.NewGuid(),
             UserId = telegramChat.Id,
             Items = new Dictionary<Guid, int>()
+           
         };
+
         public void t(Guid productId)
         {
             if (order.Items.ContainsKey(productId))

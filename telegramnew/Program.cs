@@ -19,6 +19,7 @@ namespace TelegramTestBot
             bot.Initialize();
             bot.Start();
             
+
             Console.ReadLine();
 
             bot.Stop();

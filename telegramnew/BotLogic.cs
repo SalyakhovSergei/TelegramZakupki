@@ -39,7 +39,7 @@ namespace TelegramTestBot
             Products listsOfItems = new Products();
             var msg = e.Message;
 
-            if (listsOfItems.category.Contains(msg.Text))
+            if (listsOfItems.Category.Contains(msg.Text))
             {
                 if (sql.State == ConnectionState.Closed)
                 {

@@ -15,7 +15,8 @@ namespace TelegramTestBot.Repositories
     public class OrderRepository
     {
         private readonly SqlConnection sql;
- 
+        private ApplicationContext applicationContext;
+
         public OrderRepository ()
         {
             sql = new SqlConnection (BotCredentials.connectionstring);
@@ -23,33 +24,33 @@ namespace TelegramTestBot.Repositories
 
         public async void CreateOrder(Order order)
         {
-            if (sql.State == ConnectionState.Closed)
-            {
-                sql.Open();
-                SqlCommand command = new SqlCommand($"INSERT INTO Orders (Id, UserId, Products) values ('{order.Id}', '{order.UserId}', '{JsonConvert.SerializeObject(order.Items)}')", sql);
-                await command.ExecuteNonQueryAsync();
-                sql.Close();
-            }
+            applicationContext = new ApplicationContext();
+            applicationContext.OrdersDataBase.Add(order);
+
         }
 
-        public async Order [] GetOrdersByUserIdAsync (string userId)
+        public async Order [] GetOrdersByUserIdAsync (long userId)
         {
-            sql.Open();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter("", sql);
-            DataTable dt = new DataTable();
-            dataAdapter.Fill(dt);
-            sql.Close();
+            applicationContext = new ApplicationContext();
+            var ordersByUserId = from order in applicationContext.OrdersDataBase where order.UserId == userId select order;
 
-            List<Order> ordersByUserId = new List<Order>();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                foreach (var item in dt.Rows[i].ItemArray)
-                {
-                    ordersByUserId.Add((Order)item);
-                }
-            }
+            await ordersByUserId;
+            //sql.Open();
+            //SqlDataAdapter dataAdapter = new SqlDataAdapter("", sql);
+            //DataTable dt = new DataTable();
+            //dataAdapter.Fill(dt);
+            //sql.Close();
 
-            return ordersByUserId.ToArray();
+            //List<Order> ordersByUserId = new List<Order>();
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    foreach (var item in dt.Rows[i].ItemArray)
+            //    {
+            //        ordersByUserId.Add((Order)item);
+            //    }
+            //}
+
+            //return ordersByUserId.ToArray();
         }
 
 

@@ -20,21 +20,23 @@ namespace TelegramTestBot.Repositories
         public OrderRepository ()
         {
             sql = new SqlConnection (BotCredentials.connectionstring);
+            applicationContext = new ApplicationContext();
         }
 
         public async void CreateOrder(Order order)
         {
-            applicationContext = new ApplicationContext();
             applicationContext.OrdersDataBase.Add(order);
-
         }
 
         public async Order [] GetOrdersByUserIdAsync (long userId)
         {
-            applicationContext = new ApplicationContext();
-            var ordersByUserId = from order in applicationContext.OrdersDataBase where order.UserId == userId select order;
+            var ordersByUserId = from order in applicationContext.OrdersDataBase 
+                                  where order.UserId == userId 
+                                   select order;
 
-            await ordersByUserId;
+            return await ordersByUserId;
+
+
             //sql.Open();
             //SqlDataAdapter dataAdapter = new SqlDataAdapter("", sql);
             //DataTable dt = new DataTable();

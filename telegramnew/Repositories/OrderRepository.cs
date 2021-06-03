@@ -14,8 +14,9 @@ namespace TelegramTestBot.Repositories
 {
     public class OrderRepository
     {
-        private readonly SqlConnection _sql;
-        private TelegramContext _telegramContext = new TelegramContext();
+        private SqlConnection _sql;
+        //private TelegramContext _telegramContext = new TelegramContext();
+
 
         public OrderRepository ()
         {
@@ -24,8 +25,16 @@ namespace TelegramTestBot.Repositories
 
         public async void CreateOrder(Order order)
         {
+            //example1
             //applicationContext.OrdersDataBase.Add(order);
 
+            /*example2
+            using (TelegramContext db = new TelegramContext())
+            {
+                Order newOrder = new Order();
+                db.OrdersDataBase.Add(newOrder);
+                db.SaveChanges();
+            }*/
 
             if (_sql.State == ConnectionState.Closed)
             {
@@ -60,13 +69,5 @@ namespace TelegramTestBot.Repositories
 
             return ordersByUserId.ToArray();
         }
-
-        public async Task<Order> OrderTask(string UserId)
-        {
-
-        }
-
-
-
     }
 }

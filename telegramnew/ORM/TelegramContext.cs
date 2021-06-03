@@ -8,7 +8,7 @@ using TelegramTestBot.Models;
 
 namespace TelegramTestBot
 {
-    public  class TelegramContext: DbContext
+    public class TelegramContext: DbContext
     {
         public DbSet <Order> OrdersDataBase { get; set; }
 

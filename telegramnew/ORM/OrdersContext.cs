@@ -1,18 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TelegramTestBot.Models;
 
-namespace TelegramTestBot
+namespace TelegramTestBot.ORM
 {
-    public class TelegramContext: DbContext
+    public class OrdersContext: DbContext
     {
         public DbSet <Order> OrdersDataBase { get; set; }
 
-        public TelegramContext()
+        public OrdersContext()
         {
             Database.EnsureCreated();
         }

@@ -1,42 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot.Types;
 using TelegramTestBot.Models;
 
 namespace TelegramTestBot.Data
 {
     public class Products
     {
-        private static Chat telegramChat;
-
         public string[] category = new string[] {   "/закупка основных средств",
                                                      "/закупка расходных материалов",
                                                      "/закупка тары",
                                                      "/закупка ИТ девайсов",
                                                      "/закупка прочего" };
 
-        public Order order = new Order
-        {
-            Id = Guid.NewGuid(),
-            UserId = telegramChat.Id,
-            Items = new Dictionary<Guid, int>()
-        };
-        public void IncreaseQuantityOFItems(Guid productId)
-        {
-            if (order.Items.ContainsKey(productId))
-            {
-                order.Items[productId]++;
-            }
-            else
-            {
-                order.Items[productId]= 1;
-            }
-        }
-
-        public readonly Product[] ListOfProducts = new Product[] 
+        public static readonly Product[] ListOfProducts = new Product[] 
         {
          new Product
          {

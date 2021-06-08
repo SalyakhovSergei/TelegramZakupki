@@ -4,10 +4,11 @@ using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using TelegramTestBot.Models;
+using TelegramTestBot.OrderInstructions;
 
 namespace TelegramTestBot
 {
-    public class BotLogic
+    public class BotLogic: IBotLogic
     {
         private ITelegramBotClient _botClient;
         private static Chat telegramChat;

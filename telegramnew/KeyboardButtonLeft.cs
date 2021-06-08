@@ -7,8 +7,11 @@ namespace TelegramTestBot
 {
     public static class KeyboardButtonLeft
     { 
-        public const string CategoryName = "Категория:";
-        public const string CreateOrderName = "Категория:";
+        
+        public const string CategoryName = "Категория";
+        public const string ItemName = "Товары";
+        public const string CreateOrderName = "Создать заказ";
+        public const string ConfirmOrder = "Подтвердить заказ";
         
       public static IReplyMarkup GetCategoryButtons()
         {
@@ -24,7 +27,7 @@ namespace TelegramTestBot
             return new ReplyKeyboardMarkup
             {
                 Keyboard = Products.ListOfProducts.Where(o => o.Category == category)
-                    .Select(o => new List<KeyboardButton>() {new KeyboardButton {Text = o.Name}}).ToList(),
+                    .Select(o => new List<KeyboardButton>() {new KeyboardButton {Text = ItemName + o.Name}}).ToList(),
                 ResizeKeyboard = true
             };
         }

@@ -34,7 +34,13 @@ namespace TelegramTestBot
         {
             var msg = e.Message;
             var msgText = msg.Text;
-            if (msgText.StartsWith(KeyboardButtonLeft.CreateOrderName))
+            
+            if (msgText == "старт")
+            {
+                await _botClient.SendTextMessageAsync(msg.Chat.Id, "Давайте заказывать ",
+                    replyMarkup: OrderCommands.CreateOrderButton());
+            }
+            if (msgText.StartsWith(OrderCommands.CreateOrderName))
             {
                 _userOrder = new Order()
                 {
@@ -43,13 +49,21 @@ namespace TelegramTestBot
                     Items = new Dictionary<Guid, int>()
                 };
                 
-                await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите товар: ",
-                    replyMarkup: KeyboardButtonLeft.GetCategoryButtons());
+                await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ",
+                    replyMarkup: OrderCommands.GetCategoryButtons());
             }
-            if (msgText.StartsWith(KeyboardButtonLeft.CategoryName))
+            
+            if (msgText.StartsWith(OrderCommands.CategoryName))
             {
                 await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите товар: ",
-                    replyMarkup: KeyboardButtonLeft.GetItemButtons(msgText.Replace(KeyboardButtonLeft.CategoryName, string.Empty)));
+                    replyMarkup: OrderCommands.GetItemButtons(msgText.Replace(OrderCommands.CategoryName, string.Empty)));
+            }
+
+            if (msgText.StartsWith(OrderCommands.ItemName))
+            {
+                //ввести количество
+                await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ",
+                    replyMarkup: OrderCommands.GetCategoryButtons());
             }
 
             

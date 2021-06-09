@@ -5,6 +5,7 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using TelegramTestBot.Models;
 using TelegramTestBot.OrderInstructions;
+using TelegramTestBot.Repositories;
 
 namespace TelegramTestBot
 {
@@ -13,6 +14,7 @@ namespace TelegramTestBot
         private ITelegramBotClient _botClient;
         private static Chat telegramChat;
         private Order _userOrder;
+        private OrderRepository _orderRepository;
         
         public void Initialize()
         {
@@ -51,6 +53,8 @@ namespace TelegramTestBot
                 
                 await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ",
                     replyMarkup: OrderCommands.GetCategoryButtons());
+                
+                _orderRepository.CreateOrder(_userOrder);
             }
             
             if (msgText.StartsWith(OrderCommands.CategoryName))

@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <RootNamespace>TelegramTestBot</RootNamespace>
+    <LangVersion>latest</LangVersion>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
@@ -14,6 +16,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="Telegram.Bot" Version="15.7.1" />
   </ItemGroup>

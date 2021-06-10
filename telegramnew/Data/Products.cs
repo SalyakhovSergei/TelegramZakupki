@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TelegramTestBot.Models;
 
 namespace TelegramTestBot.Data
@@ -11,7 +12,7 @@ namespace TelegramTestBot.Data
                                                      "/закупка ИТ девайсов",
                                                      "/закупка прочего" };
 
-        public static readonly Product[] ListOfProducts = new Product[] 
+        public static readonly List<Product> ListOfProducts = new List<Product> 
         {
          new Product
          {

@@ -37,6 +37,7 @@ namespace TelegramTestBot
         {
             return new ReplyKeyboardMarkup
             {
+                //кнопка создание заказа
                 Keyboard = new[] {new List<KeyboardButton>{new KeyboardButton {Text = CreateOrderName}}},
                
                 ResizeKeyboard = true
@@ -46,6 +47,7 @@ namespace TelegramTestBot
         {
             return new ReplyKeyboardMarkup
             {
+                //кнопка подтверждения добавления товара в заказ
                 Keyboard = new[] {new List<KeyboardButton>{new KeyboardButton {Text = ConfirmAddingItemToOrder}}},
                
                 ResizeKeyboard = true
@@ -55,6 +57,7 @@ namespace TelegramTestBot
         {
             return new ReplyKeyboardMarkup
             {
+                //кнопка подтверждения заказа
                 Keyboard = new[] {new List<KeyboardButton>{new KeyboardButton {Text = ConfirmOrder}}},
                
                 ResizeKeyboard = true

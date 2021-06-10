@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
+using TelegramTestBot.Data;
 using TelegramTestBot.Models;
 using TelegramTestBot.OrderInstructions;
 using TelegramTestBot.Repositories;
@@ -39,7 +40,7 @@ namespace TelegramTestBot
             
             if (msgText == "старт")
             {
-                await _botClient.SendTextMessageAsync(msg.Chat.Id, "Давайте заказывать ",
+                await _botClient.SendTextMessageAsync(msg.Chat.Id, "Сделайте заказ",
                     replyMarkup: OrderCommands.CreateOrderButton());
             }
             if (msgText.StartsWith(OrderCommands.CreateOrderName))
@@ -54,23 +55,29 @@ namespace TelegramTestBot
                 await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ",
                     replyMarkup: OrderCommands.GetCategoryButtons());
                 
-                _orderRepository.CreateOrder(_userOrder);
             }
             
             if (msgText.StartsWith(OrderCommands.CategoryName))
             {
                 await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите товар: ",
                     replyMarkup: OrderCommands.GetItemButtons(msgText.Replace(OrderCommands.CategoryName, string.Empty)));
+                
             }
 
             if (msgText.StartsWith(OrderCommands.ItemName))
             {
-                //ввести количество
-                await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ",
-                    replyMarkup: OrderCommands.GetCategoryButtons());
+                
+                
+                
             }
-
             
+            //создать  заказ и добавить в базу данных
+            _orderRepository.CreateOrder(_userOrder);
+            
+            //Найти элемент в массиве ListOfProducts и добавить в словарь
+            var item = Products.ListOfProducts.Find(item => item.Name == msgText);
+            _userOrder.Items.Add(item.Id, 1);
+
         }
         
         // public Order order = new Order

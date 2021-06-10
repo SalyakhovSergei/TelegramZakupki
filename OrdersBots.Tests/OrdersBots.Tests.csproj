@@ -1,13 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFrameworks>net472;net5.0;netstandard2.1</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Moq" Version="4.16.1" />
       <PackageReference Include="NUnit" Version="3.13.2" />
       <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\telegramnew\OrdersBot.csproj" />
     </ItemGroup>
 
 </Project>

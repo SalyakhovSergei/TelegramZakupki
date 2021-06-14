@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
@@ -15,7 +16,7 @@ namespace TelegramTestBot
         private ITelegramBotClient _botClient;
         private static Chat telegramChat;
         private Order _userOrder;
-        private OrderRepository _orderRepository;
+       private OrdersProcessor _ordersProcessor;
         
         public void Initialize()
         {
@@ -45,13 +46,7 @@ namespace TelegramTestBot
             }
             if (msgText.StartsWith(OrderCommands.CreateOrderName))
             {
-                _userOrder = new Order()
-                {
-                    Id = new Guid(),
-                    UserId = msg.Chat.Id,
-                    Items = new Dictionary<Guid, int>()
-                };
-                
+               _ordersProcessor.CreateNewOrder(msg.Chat.Id);
                 await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ",
                     replyMarkup: OrderCommands.GetCategoryButtons());
                 
@@ -66,37 +61,15 @@ namespace TelegramTestBot
 
             if (msgText.StartsWith(OrderCommands.ItemName))
             {
-                
-                
-                
+                _ordersProcessor.AppendItemToOrder(msg.Chat.Id, Products.ListOfProducts.FirstOrDefault(o => o.Name == msg.Text.Replace(OrderCommands.ItemName, string.Empty)).Id);
+
+
             }
             
-            //создать  заказ и добавить в базу данных
-            _orderRepository.CreateOrder(_userOrder);
             
-            //Найти элемент в массиве ListOfProducts и добавить в словарь
-            var item = Products.ListOfProducts.Find(item => item.Name == msgText);
-            _userOrder.Items.Add(item.Id, 1);
 
         }
+    
         
-        // public Order order = new Order
-        // {
-        //     Id = Guid.NewGuid(),
-        //     UserId = telegramChat.Id,
-        //     Items = new Dictionary<Guid, int>()
-        // };
-        // public void IncreaseQuantityOfItems(Guid productId)
-        // {
-        //     if (order.Items.ContainsKey(productId))
-        //     {
-        //         order.Items[productId]++;
-        //     }
-        //     else
-        //     {
-        //         order.Items[productId]= 1;
-        //     }
-        // }
-
     }
 }

@@ -35,5 +35,10 @@ namespace TelegramTestBot.Repositories
                 return result;
             }
         }
+
+        public void UpdateOrder(Order order)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

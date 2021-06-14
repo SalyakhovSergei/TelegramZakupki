@@ -26,10 +26,12 @@ namespace TelegramTestBot
         }
         public static IReplyMarkup GetItemButtons(string category)
         {
+            var buttons = Products.ListOfProducts.Where(o => o.Category == category)
+                .Select(o => new List<KeyboardButton>() {new KeyboardButton {Text = ItemName + o.Name}}).ToList();
+            buttons.Add(ToCategoriesButton());
             return new ReplyKeyboardMarkup
             {
-                Keyboard = Products.ListOfProducts.Where(o => o.Category == category)
-                    .Select(o => new List<KeyboardButton>() {new KeyboardButton {Text = ItemName + o.Name}}).ToList(),
+                Keyboard = buttons,
                 ResizeKeyboard = true
             };
         }
@@ -71,6 +73,11 @@ namespace TelegramTestBot
                
                 ResizeKeyboard = true
             };
+        }
+
+        private static List<KeyboardButton> ToCategoriesButton()
+        {
+            return new List<KeyboardButton>{new KeyboardButton {Text = "show"}};
         }
     }
 }

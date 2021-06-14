@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TelegramTestBot.Data;
 
 namespace TelegramTestBot.Models
 {
@@ -8,6 +9,8 @@ namespace TelegramTestBot.Models
         public Guid Id { get; set; } 
         public long UserId { get; set; }
         public Dictionary<Guid, int> Items { get; set; }
+        
+        public OrderStatus Status { get; set; }
     }
 
 

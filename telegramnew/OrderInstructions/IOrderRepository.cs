@@ -10,5 +10,7 @@ namespace TelegramTestBot.OrderInstructions
         public Order[] GetOrdersByUserId (long userId);
 
         public Order GetOrderById(Guid orderId);
+
+        public void UpdateOrder(Order order);
     }
 }

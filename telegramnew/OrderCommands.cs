@@ -14,13 +14,17 @@ namespace TelegramTestBot
         public const string ConfirmAddingItemToOrder = "Добавить товар в заказ";
         public const string ConfirmOrder = "Подтвердить заказ";
         public const string CompleteOrder = "Завершить заказ";
+        public const string ToCategoriesList = "К списку категорий";
+        public const string ToMainScreen = "В начало";
         
       public static IReplyMarkup GetCategoryButtons()
-        {
+      {
+          var buttons = Products.ListOfProducts.Select(o => o.Category).Distinct()
+              .Select(o => new List<KeyboardButton>() {new KeyboardButton {Text = CategoryName + o}}).ToList();
+          buttons.Add(ToMainButtons());
             return new ReplyKeyboardMarkup
             {
-                Keyboard = Products.ListOfProducts.Select(o => o.Category).Distinct()
-                    .Select(o => new List<KeyboardButton>() {new KeyboardButton {Text = CategoryName + o}}).ToList(),
+                Keyboard = buttons,
                 ResizeKeyboard = true
             };
         }
@@ -77,7 +81,11 @@ namespace TelegramTestBot
 
         private static List<KeyboardButton> ToCategoriesButton()
         {
-            return new List<KeyboardButton>{new KeyboardButton {Text = "show"}};
+            return new List<KeyboardButton>{new KeyboardButton {Text = ToCategoriesList}};
+        }
+        private static List<KeyboardButton> ToMainButtons()
+        {
+            return new List<KeyboardButton>{new KeyboardButton {Text = ToMainScreen}};
         }
     }
 }

@@ -62,8 +62,6 @@ namespace TelegramTestBot
             if (msgText.StartsWith(OrderCommands.ItemName))
             {
                 _ordersProcessor.AppendItemToOrder(msg.Chat.Id, Products.ListOfProducts.FirstOrDefault(o => o.Name == msg.Text.Replace(OrderCommands.ItemName, string.Empty)).Id);
-
-
             }
             
             

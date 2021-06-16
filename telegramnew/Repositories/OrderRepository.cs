@@ -38,7 +38,11 @@ namespace TelegramTestBot.Repositories
 
         public void UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            using (OrdersContext db = new OrdersContext())
+            {
+                db.OrdersDataBase.Update(order);
+                db.SaveChanges();
+            }
         }
     }
 }

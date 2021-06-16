@@ -8,7 +8,7 @@ namespace TelegramTestBot.Models
     {
         public Guid Id { get; set; } 
         public long UserId { get; set; }
-        public Dictionary<Guid, int> Items { get; set; }
+        public List<Items> Items { get; set; }
         
         public OrderStatus Status { get; set; }
     }

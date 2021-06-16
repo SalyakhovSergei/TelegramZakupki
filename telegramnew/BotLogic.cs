@@ -21,6 +21,7 @@ namespace TelegramTestBot
         public void Initialize()
         {
             _botClient = new TelegramBotClient(BotCredentials.token);
+            _ordersProcessor = new OrdersProcessor(new OrderRepository());
         }
 
         public void Start()
@@ -44,7 +45,7 @@ namespace TelegramTestBot
                 await _botClient.SendTextMessageAsync(msg.Chat.Id, "Сделайте заказ",
                     replyMarkup: OrderCommands.CreateOrderButton());
             }
-            if (msgText.StartsWith(OrderCommands.CreateOrderName))
+            if (msgText ==OrderCommands.CreateOrderName)
             {
                _ordersProcessor.CreateNewOrder(msg.Chat.Id);
                 await _botClient.SendTextMessageAsync(msg.Chat.Id, "Выберите категорию: ",
@@ -62,6 +63,7 @@ namespace TelegramTestBot
             if (msgText.StartsWith(OrderCommands.ItemName))
             {
                 _ordersProcessor.AppendItemToOrder(msg.Chat.Id, Products.ListOfProducts.FirstOrDefault(o => o.Name == msg.Text.Replace(OrderCommands.ItemName, string.Empty)).Id);
+                
             }
             
             
